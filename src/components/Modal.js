@@ -134,6 +134,7 @@ const ModalContainer = styled.div`
 
     @media (max-width: 600px) {
       min-width: 300px;
+      width: 90%;
     }
 
     .close-button {
