@@ -14,9 +14,9 @@ export default function Modal({
     descriptionShort,
     descriptionFull,
     image: guestImage
-  } = currentGuest;
+  } = currentGuest ?? {};
 
-  const { title, subtitle, date, time, isAM, image: eventImage } = currentEvent;
+  const { title, subtitle, date, time = '', isAM, image: eventImage } = currentEvent ?? {};
 
   const [BST, setBST] = useState([0, 'AM']);
   const [CST, setCST] = useState([0, 'AM']);

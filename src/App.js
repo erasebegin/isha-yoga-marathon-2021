@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import {guests, events} from './data';
+import { guests, events } from './data';
 
 // COMPONENTS
 import Header from './components/Header';
@@ -11,9 +11,9 @@ import Modal from './components/Modal';
 import './styles/global.css';
 
 const App = () => {
-
-  const [currentGuestId, setCurrentGuestId] = useState('1001');
-  const [currentEvent, setCurrentEvent] = useState({});
+  const [currentGuestId, setCurrentGuestId] = useState('');
+  const [currentGuest, setCurrentGuest] = useState('');
+  const [currentEvent, setCurrentEvent] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const getGuestById = (id) => {
@@ -23,9 +23,16 @@ const App = () => {
 
   const getEventById = (id) => {
     const filteredArr = events.filter((event) => id === event.id);
-    console.log({filteredArr})
+    console.log({ filteredArr });
     return filteredArr[0];
   };
+
+  useEffect(() => {
+    if (currentGuestId) {
+      setCurrentGuest(getGuestById(currentGuestId));
+      setCurrentEvent(getEventById(getGuestById(currentGuestId).eventId));
+    }
+  }, [currentGuestId]);
 
   return (
     <>
@@ -38,9 +45,8 @@ const App = () => {
             setShowModal={setShowModal}
           />
           <Modal
-            currentGuest={getGuestById(currentGuestId)}
-            currentEvent={getEventById(getGuestById(currentGuestId).eventId)}
-            events={currentEvent}
+            currentGuest={currentGuest}
+            currentEvent={currentEvent}
             showModal={showModal}
             setShowModal={setShowModal}
           />
@@ -63,8 +69,11 @@ const RootContainer = styled.div`
     @media (max-width: 750px) {
       padding-top: 22rem;
     }
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       padding-top: 18rem;
+    }
+    @media (max-width: 400px) {
+      padding-top: 12rem;
     }
   }
 `;
