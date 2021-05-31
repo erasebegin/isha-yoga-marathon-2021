@@ -1,11 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import bannerImage from "../images/Banner1.png";
+import React from 'react';
+import styled from 'styled-components';
+import bannerImage from '../images/Banner1.png';
 
 export default function Header() {
   return (
     <HeaderContainer className="banner-wrapper">
-      <img src={bannerImage} className="banner-image" />
+      <img
+        src={bannerImage}
+        className="banner-image"
+        alt="banner depicting 3 images: a person meditating, a bowl of salad, and a hand holding a phone that is displaying  a yogic practice"
+      />
       <h1>
         YOGA <span>MARATHON</span>
       </h1>
@@ -14,10 +18,10 @@ export default function Header() {
         19<sup>th</sup> - 20<sup>th</sup> JUNE
       </h2>
       <p className="intro-paragraph">
-        Join our international celebrity influencers on a 2 day live marathon of{" "}
-        <span className="blue">Yoga</span>,{" "}
-        <span className="orange">Meditation</span> and{" "}
-        <span className="green">Nutrition</span> around the{" "}
+        Join our international celebrity influencers on a 2 day live marathon of{' '}
+        <span className="blue">Yoga</span>,{' '}
+        <span className="orange">Meditation</span> and{' '}
+        <span className="green">Nutrition</span> around the{' '}
         <b>International Day of Yoga 2021</b>
       </p>
     </HeaderContainer>

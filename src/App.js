@@ -1,51 +1,49 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import {guests, events} from './data';
 
 // COMPONENTS
-import Header from "./components/Header";
-import Accordion from "./components/Accordion";
+import Header from './components/Header';
+import Accordion from './components/Accordion';
+import Modal from './components/Modal';
 
 // STYLES
-import "./styles/global.css";
-
-// GUEST IMAGES
-import elias from './images/Elias.png'
-import debonita from './images/Debonita.png'
-import elisa from './images/Elisa.png'
+import './styles/global.css';
 
 const App = () => {
 
-  const generateId = (index) => {
-    return "100" + index.toString()
-  }
+  const [currentGuestId, setCurrentGuestId] = useState('1001');
+  const [currentEvent, setCurrentEvent] = useState({});
+  const [showModal, setShowModal] = useState(false);
 
-  const guests = [
-    {
-      id: generateId(1),
-      name: "Elias Beck",
-      description: "Forbes Magazine 30 under 30",
-      image: elias,
-    },
-    {
-      id: generateId(2),
-      name: "Debonita Deore",
-      description: "Cosmopoliton Best Travel Blogger",
-      image: debonita,
-    },
-    {
-      id: generateId(3),
-      name: "Elisa Varoud",
-      description: "Actress, This is Enchanting",
-      image: elisa,
-    },
-  ];
+  const getGuestById = (id) => {
+    const filteredArr = guests.filter((guest) => id === guest.id);
+    return filteredArr[0];
+  };
+
+  const getEventById = (id) => {
+    const filteredArr = events.filter((event) => id === event.id);
+    console.log({filteredArr})
+    return filteredArr[0];
+  };
 
   return (
     <>
       <RootContainer>
         <div className="inner-container">
           <Header />
-          <Accordion guests={guests} />
+          <Accordion
+            guests={guests}
+            setCurrentGuestId={setCurrentGuestId}
+            setShowModal={setShowModal}
+          />
+          <Modal
+            currentGuest={getGuestById(currentGuestId)}
+            currentEvent={getEventById(getGuestById(currentGuestId).eventId)}
+            events={currentEvent}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
         </div>
       </RootContainer>
     </>

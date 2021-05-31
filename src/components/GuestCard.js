@@ -1,10 +1,25 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-export default function GuestCard({ name = "", description = "", image = "" }) {
+export default function GuestCard({
+  name = '',
+  description = '',
+  image = '',
+  id = '',
+  setCurrentGuestId,
+  setShowModal
+}) {
+
+  const handleClick = () => {
+    setShowModal(true)
+    setCurrentGuestId(id)
+  }
+
   return (
     <CardContainer>
-      <img src={image} alt={name}/>
+      <button onClick={handleClick}>
+        <img src={image} alt={name} />
+      </button>
       <h3>{name}</h3>
       <p>{description}</p>
     </CardContainer>
@@ -21,10 +36,16 @@ const CardContainer = styled.div`
     margin-bottom: 3rem;
   }
 
-  img {
-    border-radius: 50%;
-    max-width: 150px;
-    margin-bottom: 1rem;
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+
+    img {
+      border-radius: 50%;
+      max-width: 150px;
+      margin-bottom: 1rem;
+    }
   }
 
   h3 {
@@ -34,6 +55,6 @@ const CardContainer = styled.div`
   }
 
   p {
-      padding: 0 1rem;
+    padding: 0 1rem;
   }
 `;

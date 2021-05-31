@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { AiOutlinePlusCircle, AiOutlineMinusCircle } from "react-icons/ai";
-import GuestCard from "./GuestCard";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
+import GuestCard from './GuestCard';
 
 function AccordionSection({ children, title }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +24,7 @@ function AccordionSection({ children, title }) {
   );
 }
 
-export default function Accordion({ guests }) {
+export default function Accordion({ guests, setCurrentGuestId, setShowModal }) {
   return (
     <AccordionContainer>
       <AccordionSection title="Event details and highlights">
@@ -38,23 +38,26 @@ export default function Accordion({ guests }) {
       <AccordionSection title="How do I join?">
         <div className="how-to-join">
           <h2 className="accordion-section-title">
-            Our featured guests on{" "}
+            Our featured guests on{' '}
             <b>
               Saturday 19<sup>th</sup>
             </b>
           </h2>
           <div className="guest-cards">
-            {guests.map((guest, index) => (
+            {guests.map((guest) => (
               <GuestCard
-                key={index}
+                key={guest.id}
+                id={guest.id}
                 name={guest.name}
                 description={guest.description}
                 image={guest.image}
+                setCurrentGuestId={setCurrentGuestId}
+                setShowModal={setShowModal}
               />
             ))}
           </div>
           <h2 className="accordion-section-title">
-            Our featured guests on{" "}
+            Our featured guests on{' '}
             <b>
               Sunday 20<sup>th</sup>
             </b>
@@ -63,9 +66,12 @@ export default function Accordion({ guests }) {
             {guests.map((guest, index) => (
               <GuestCard
                 key={index}
+                id={guest.id}
                 name={guest.name}
                 description={guest.description}
                 image={guest.image}
+                setCurrentGuestId={setCurrentGuestId}
+                setShowModal={setShowModal}
               />
             ))}
           </div>
@@ -82,7 +88,6 @@ const SectionContainer = styled.div`
     padding: 1rem;
     padding-bottom: 0.5rem;
 
-    
     button {
       display: flex;
       align-items: center;
@@ -94,12 +99,12 @@ const SectionContainer = styled.div`
       margin-right: 1rem;
       cursor: pointer;
     }
-    
+
     h2 {
       font-weight: 400;
 
-      @media(max-width:700px) {
-          font-size: 1.5rem;
+      @media (max-width: 700px) {
+        font-size: 1.5rem;
       }
     }
   }
@@ -107,7 +112,6 @@ const SectionContainer = styled.div`
   .body-container {
     transition: 400ms;
   }
-
 `;
 const AccordionContainer = styled.div`
   margin-top: 2rem;
@@ -120,7 +124,6 @@ const AccordionContainer = styled.div`
   }
 
   .how-to-join {
-
     .accordion-section-title {
       font-weight: 400;
       text-align: center;
@@ -134,10 +137,10 @@ const AccordionContainer = styled.div`
       justify-content: space-between;
       align-items: center;
       max-width: 750px;
-      margin:auto;
+      margin: auto;
       margin-bottom: 5rem;
 
-      @media(max-width:700px){
+      @media (max-width: 700px) {
         justify-content: center;
       }
     }

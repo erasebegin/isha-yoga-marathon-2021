@@ -31,8 +31,13 @@ body {
 	/* COLOURS */
 	--blue: #243B9C;
 	--orange: #DF7127;
+	--orangeDark: #D04823;
 	--green: #2A9B2D;
 	--mustard: #BC8337;
+	--mustardDark: #B4741F;
+	--beige: #FBF7F0;
+	--beigeDark: #DDD3C2;
+	--greyDark: #494949;
 }
 
 h1 {
