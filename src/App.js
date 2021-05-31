@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { guests, events } from './data';
 
 // COMPONENTS
@@ -15,10 +16,13 @@ const App = () => {
   const [currentGuest, setCurrentGuest] = useState('');
   const [currentEvent, setCurrentEvent] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
-  const pathName = window.location.pathname;
+  const pathName = useLocation().pathname;
+  console.log({ pathName });
   const pathToId = pathName.replace(/[^\d]/g, '');
-  const guestUrlMatch = guests.filter(guest => guest.id === pathToId);
+  const guestUrlMatch = guests.filter((guest) => guest.id === pathToId);
+  console.log({ pathToId });
 
   const getGuestById = (id) => {
     const filteredArr = guests.filter((guest) => id === guest.id);
@@ -37,6 +41,16 @@ const App = () => {
     }
   }, [currentGuestId]);
 
+  useEffect(() => {
+    if (!window.localStorage.getItem('emailsub')) {
+      window.localStorage.setItem('emailsub', emailSubmitted);
+    } else {
+      setEmailSubmitted(
+        window.localStorage.getItem('emailsub', emailSubmitted)
+      );
+    }
+  }, [emailSubmitted]);
+
   return (
     <>
       <RootContainer>
@@ -52,7 +66,7 @@ const App = () => {
             currentEvent={currentEvent}
             showModal={showModal}
             setShowModal={setShowModal}
-            guestUrlMatch={guestUrlMatch[0].id}
+            guestUrlMatch={guestUrlMatch.length && guestUrlMatch[0].id }
           />
         </div>
       </RootContainer>
