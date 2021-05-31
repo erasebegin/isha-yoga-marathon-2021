@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { quotes } from '../data';
 import { AiOutlineClose } from 'react-icons/ai';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 export default function Modal({
   currentGuest,
   currentEvent,
   showModal,
   setShowModal,
-  guestUrlMatch
+  guestUrlMatch,
+  emailSubmitted,
+  setEmailSubmitted
 }) {
   const {
     id: guestId,
@@ -29,6 +32,9 @@ export default function Modal({
 
   const [BST, setBST] = useState([0, 'AM']);
   const [CST, setCST] = useState([0, 'AM']);
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState('');
+  const [showEmailForm, setShowEmailForm] = useState(true);
 
   const closeModal = (event) => {
     if (event.target.classList.contains('outer-container')) {
@@ -39,6 +45,44 @@ export default function Modal({
   const generateRandom = (max) => {
     return Math.floor(Math.random() * max);
   };
+
+  const handleChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `https://v1.nocodeapi.com/erasebegin/google_sheets/${process.env.REACT_APP_GOOGLE_SHEETS_KEY}?tabId=emails`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify([[email]])
+        }
+      );
+      await response.json();
+      setLoading(false);
+      setEmail('');
+      setEmailSubmitted('true');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (guestId === guestUrlMatch) {
+      setShowEmailForm(false);
+    } else if (emailSubmitted === 'true') {
+      setShowEmailForm(false);
+      console.log('triggerred sub');
+    } else {
+      setShowEmailForm(true);
+    }
+  });
 
   useEffect(() => {
     const extractedNumber = time.match(/^[0-9]*/g);
@@ -57,14 +101,12 @@ export default function Modal({
     }
   }, []);
 
-  console.log({guestId})
-  console.log({guestUrlMatch})
-
   return (
     <ModalContainer
       showModal={showModal}
       onClick={(event) => closeModal(event)}
       className="outer-container"
+      $loading={loading}
     >
       <div className="modal-inner-container">
         <button className="close-button" onClick={() => setShowModal(false)}>
@@ -114,12 +156,22 @@ export default function Modal({
         </div>
         <div
           className="email-overlay"
-          style={{ display: guestId === guestUrlMatch ? 'none' : 'flex' }}
+          style={{ display: showEmailForm ? 'flex' : 'none' }}
         >
-          <form>
-            <input type="email" placeholder="Email Address" />
-            <button>View full details</button>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Email Address"
+              value={email}
+              onChange={(e) => handleChange(e)}
+            />
+            <button type="submit" disabled={loading ? true : false}>
+              View full details
+            </button>
           </form>
+          <div className="loading">
+            <ClipLoader />
+          </div>
         </div>
       </div>
     </ModalContainer>
@@ -251,6 +303,7 @@ const ModalContainer = styled.div`
           }
         }
       }
+
       .modal-body-top {
         display: flex;
         justify-content: space-between;
@@ -291,6 +344,7 @@ const ModalContainer = styled.div`
           }
         }
       }
+
       .modal-body-bottom {
         padding: 0 1rem 1rem;
         font-size: 0.9rem;
@@ -310,6 +364,7 @@ const ModalContainer = styled.div`
         }
       }
     }
+
     .email-overlay {
       position: absolute;
       left: 0;
@@ -327,6 +382,11 @@ const ModalContainer = styled.div`
         rgba(251, 247, 240, 0.2164216028208158) 100%
       );
 
+      .loading {
+        display: ${(props) => (props.$loading ? 'initial' : 'none')};
+        position: absolute;
+      }
+
       form {
         display: flex;
         flex-direction: column;
@@ -336,6 +396,8 @@ const ModalContainer = styled.div`
           margin-bottom: 1em;
           border-radius: 5px;
           border: 1px solid var(--greyDark);
+          opacity: ${(props) => (props.$loading ? 0.5 : 1)};
+          pointer-events: ${(props) => (props.$loading ? 'none' : 'initial')};
 
           &::placeholder {
             font-family: 'Fira Sans', sans-serif;
@@ -351,6 +413,7 @@ const ModalContainer = styled.div`
           border: none;
           border-radius: 5px;
           padding: 0.8rem 2rem;
+          opacity: ${(props) => (props.$loading ? 0.5 : 1)};
         }
       }
     }

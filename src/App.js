@@ -16,7 +16,7 @@ const App = () => {
   const [currentGuest, setCurrentGuest] = useState('');
   const [currentEvent, setCurrentEvent] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const [emailSubmitted, setEmailSubmitted] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState('false');
   const pathName = useLocation().pathname;
   const pathToId = pathName.replace(/[^\d]/g, '');
   const guestUrlMatch = guests.filter((guest) => guest.id === pathToId);
@@ -39,15 +39,20 @@ const App = () => {
   }, [currentGuestId]);
 
   useEffect(() => {
+    console.log('triggered emailsubmitted useEffect')
     if (!window.localStorage.getItem('emailsub')) {
       window.localStorage.setItem('emailsub', emailSubmitted);
+      console.log('triggered emailsubmitted useEffect - if')
     } else {
-      setEmailSubmitted(
-        window.localStorage.getItem('emailsub', emailSubmitted)
-      );
+      setEmailSubmitted(window.localStorage.getItem('emailsub'))
+      console.log('triggered emailsubmitted useEffect - else')
     }
-  }, [emailSubmitted]);
+  }, []);
 
+  useEffect(()=>{
+    window.localStorage.setItem('emailsub',emailSubmitted)
+  },[emailSubmitted])
+  
   return (
     <>
       <RootContainer>
@@ -63,7 +68,9 @@ const App = () => {
             currentEvent={currentEvent}
             showModal={showModal}
             setShowModal={setShowModal}
-            guestUrlMatch={guestUrlMatch.length && guestUrlMatch[0].id }
+            guestUrlMatch={guestUrlMatch.length && guestUrlMatch[0].id}
+            emailSubmitted={emailSubmitted}
+            setEmailSubmitted={setEmailSubmitted}
           />
         </div>
       </RootContainer>
