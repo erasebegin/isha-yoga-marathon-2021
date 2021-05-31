@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import bannerImage from '../images/Banner1-compressed.png';
+import {Link} from 'react-router-dom'
 
 export default function Header() {
   return (
@@ -24,6 +25,7 @@ export default function Header() {
         <span className="green">Nutrition</span> around the{' '}
         <b>International Day of Yoga 2021</b>
       </p>
+    <Link to="/1002">gfs</Link>
     </HeaderContainer>
   );
 }

@@ -17,12 +17,9 @@ const App = () => {
   const [currentEvent, setCurrentEvent] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [emailSubmitted, setEmailSubmitted] = useState(false);
-
   const pathName = useLocation().pathname;
-  console.log({ pathName });
   const pathToId = pathName.replace(/[^\d]/g, '');
   const guestUrlMatch = guests.filter((guest) => guest.id === pathToId);
-  console.log({ pathToId });
 
   const getGuestById = (id) => {
     const filteredArr = guests.filter((guest) => id === guest.id);
