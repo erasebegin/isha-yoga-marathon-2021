@@ -5,11 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 ReactDOM.render(
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/">
-        <App />
-      </Route>
-    </Switch>
+    <App />
   </BrowserRouter>,
   document.getElementById('root')
 );
