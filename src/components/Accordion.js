@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { AiOutlinePlusCircle, AiOutlineMinusCircle } from 'react-icons/ai';
 import GuestCard from './GuestCard';
 
 function AccordionSection({ children, title }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (title === 'How do I join?') {
+      setIsOpen(true);
+    }
+  }, []);
 
   return (
     <SectionContainer>
@@ -16,7 +22,7 @@ function AccordionSection({ children, title }) {
       </div>
       <div
         className="body-container"
-        style={{ opacity: isOpen ? 1 : 0, maxHeight: isOpen ? 1000 : 0 }}
+        style={{ opacity: isOpen ? 1 : 0, maxHeight: isOpen ? 10000 : 0 }}
       >
         {isOpen && children}
       </div>

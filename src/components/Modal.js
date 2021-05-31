@@ -4,19 +4,28 @@ import { quotes } from '../data';
 import { AiOutlineClose } from 'react-icons/ai';
 
 export default function Modal({
-  currentGuest = {},
-  currentEvent = {},
-  showModal = true,
-  setShowModal
+  currentGuest,
+  currentEvent,
+  showModal,
+  setShowModal,
+  guestUrlMatch
 }) {
   const {
+    id: guestId,
     name,
     descriptionShort,
     descriptionFull,
     image: guestImage
   } = currentGuest ?? {};
 
-  const { title, subtitle, date, time = '', isAM, image: eventImage } = currentEvent ?? {};
+  const {
+    title,
+    subtitle,
+    date,
+    time = '',
+    isAM,
+    image: eventImage
+  } = currentEvent ?? {};
 
   const [BST, setBST] = useState([0, 'AM']);
   const [CST, setCST] = useState([0, 'AM']);
@@ -47,6 +56,9 @@ export default function Modal({
       setCST([convertedNumber - 10, AMPM ? 'am' : 'pm']);
     }
   }, []);
+
+  console.log({guestId})
+  console.log({guestUrlMatch})
 
   return (
     <ModalContainer
@@ -100,7 +112,10 @@ export default function Modal({
             </blockquote>
           </div>
         </div>
-        <div className="email-overlay">
+        <div
+          className="email-overlay"
+          style={{ display: guestId === guestUrlMatch ? 'none' : 'flex' }}
+        >
           <form>
             <input type="email" placeholder="Email Address" />
             <button>View full details</button>

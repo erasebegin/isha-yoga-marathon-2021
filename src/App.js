@@ -16,6 +16,10 @@ const App = () => {
   const [currentEvent, setCurrentEvent] = useState('');
   const [showModal, setShowModal] = useState(false);
 
+  const pathName = window.location.pathname;
+  const pathToId = pathName.replace(/[^\d]/g, '');
+  const guestUrlMatch = guests.filter(guest => guest.id === pathToId);
+
   const getGuestById = (id) => {
     const filteredArr = guests.filter((guest) => id === guest.id);
     return filteredArr[0];
@@ -23,7 +27,6 @@ const App = () => {
 
   const getEventById = (id) => {
     const filteredArr = events.filter((event) => id === event.id);
-    console.log({ filteredArr });
     return filteredArr[0];
   };
 
@@ -49,6 +52,7 @@ const App = () => {
             currentEvent={currentEvent}
             showModal={showModal}
             setShowModal={setShowModal}
+            guestUrlMatch={guestUrlMatch[0].id}
           />
         </div>
       </RootContainer>
