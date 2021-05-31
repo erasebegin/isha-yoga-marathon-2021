@@ -54,7 +54,7 @@ export default function Modal({
       onClick={(event) => closeModal(event)}
       className="outer-container"
     >
-      <div className="inner-container">
+      <div className="modal-inner-container">
         <button className="close-button" onClick={() => setShowModal(false)}>
           <AiOutlineClose />
         </button>
@@ -121,7 +121,7 @@ const ModalContainer = styled.div`
   pointer-events: ${(props) => (props.showModal ? 'initial' : 'none')};
   transition: opacity 200ms ease-in-out;
 
-  .inner-container {
+  .modal-inner-container {
     position: absolute;
     top: 50%;
     left: 50%;
