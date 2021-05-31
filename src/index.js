@@ -12,7 +12,7 @@ ReactDOM.render(
       </Route>
       {guests.map((guest) => (
         <Route path={`/${guest.id}`}>
-          <App />
+          <p>guest: {guest.name}</p>
         </Route>
       ))}
     </Switch>
