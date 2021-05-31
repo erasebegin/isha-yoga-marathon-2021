@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import bannerImage from '../images/Banner1.png';
+import bannerImage from '../images/Banner1-compressed.png';
 
 export default function Header() {
   return (

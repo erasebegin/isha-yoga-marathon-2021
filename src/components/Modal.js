@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { quotes } from '../data';
-import {AiOutlineClose} from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 
 export default function Modal({
   currentGuest = {},
@@ -64,7 +64,7 @@ export default function Modal({
             <p>{descriptionShort}</p>
           </div>
           <div className="header-right">
-            <img src={eventImage} />
+            <img src={eventImage} alt={title} />
             <div className="event-title">
               <h3>{title}</h3>
               <p>{subtitle}</p>
@@ -72,8 +72,15 @@ export default function Modal({
           </div>
         </div>
         <div className="modal-body">
+          <div className="header-right-mobile">
+            <img src={eventImage} alt={title} />
+            <div className="event-title">
+              <h3>{title}</h3>
+              <p>{subtitle}</p>
+            </div>
+          </div>
           <div className="modal-body-top">
-            <img src={guestImage} />
+            <img src={guestImage} alt={name} />
             <p>{descriptionFull}</p>
           </div>
           <div className="modal-body-bottom">
@@ -123,6 +130,11 @@ const ModalContainer = styled.div`
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
     padding: 0;
     max-width: 650px;
+    min-width: 500px;
+
+    @media (max-width: 600px) {
+      min-width: 300px;
+    }
 
     .close-button {
       position: absolute;
@@ -160,7 +172,11 @@ const ModalContainer = styled.div`
       .header-right {
         display: flex;
         align-items: center;
-        padding-right: 1rem;
+        padding: 0 1rem;
+
+        @media (max-width: 600px) {
+          display: none;
+        }
 
         img {
           max-width: 50px;
@@ -187,6 +203,38 @@ const ModalContainer = styled.div`
     }
 
     .modal-body {
+      .header-right-mobile {
+        display: none;
+
+        @media (max-width: 600px) {
+          display: flex;
+          justify-content: center;
+          padding: 1rem;
+          padding-bottom: 0;
+
+          img {
+            max-width: 50px;
+            max-height: 50px;
+            padding-right: 1rem;
+          }
+
+          .event-title {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+
+            h3 {
+              font-size: 1.2rem;
+              margin-bottom: 0.3rem;
+            }
+
+            p {
+              font-size: 0.9rem;
+              font-weight: bold;
+            }
+          }
+        }
+      }
       .modal-body-top {
         display: flex;
         justify-content: space-between;
@@ -195,11 +243,22 @@ const ModalContainer = styled.div`
         border-top: 1px solid var(--beigeDark);
         border-bottom: 1px solid var(--beigeDark);
 
+        @media (max-width: 600px) {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border: none;
+        }
+
         img {
           max-width: 200px;
           max-height: 200px;
           padding: 1rem 1.5rem 1rem 0;
           border-radius: 50%;
+
+          @media (max-width: 600px) {
+            padding: 0;
+          }
         }
 
         p {
@@ -208,6 +267,12 @@ const ModalContainer = styled.div`
           font-size: 1.5rem;
           font-weight: 300;
           color: var(--greyDark);
+
+          @media (max-width: 600px) {
+            padding: 1rem 0;
+            border: none;
+            font-size: 1.2rem;
+          }
         }
       }
       .modal-body-bottom {
