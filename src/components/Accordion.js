@@ -88,6 +88,10 @@ const SectionContainer = styled.div`
     padding: 1rem;
     padding-bottom: 0.5rem;
 
+    @media (max-width: 700px) {
+      margin-bottom: 3rem;
+    }
+
     button {
       display: flex;
       align-items: center;
@@ -129,6 +133,12 @@ const AccordionContainer = styled.div`
       text-align: center;
       margin-top: 1rem;
       margin-bottom: 3rem;
+
+      h2 {
+        @media (max-width: 700px) {
+          font-size: 1rem;
+        }
+      }
     }
 
     .guest-cards {
@@ -142,6 +152,8 @@ const AccordionContainer = styled.div`
 
       @media (max-width: 700px) {
         justify-content: center;
+        flex-direction: column;
+        margin-bottom: 3rem;
       }
     }
   }

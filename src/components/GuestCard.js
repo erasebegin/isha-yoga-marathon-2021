@@ -44,8 +44,14 @@ const CardContainer = styled.div`
     img {
       border-radius: 50%;
       max-width: 150px;
+      max-height: 150px;
       margin-bottom: 1rem;
       cursor: pointer;
+
+      @media(max-width: 700px) {
+        max-width: 200px;
+        max-height: 200px;
+      }
     }
   }
 
