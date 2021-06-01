@@ -5,6 +5,6 @@ Landing page for advertising and organising events celebrating the International
 **Created using `npx create-react-app` managed with `yarn`.**
 
 Packages: 
-`styled-components`
-`react-icons`
-`react-spinners`
+- `styled-components`
+- `react-icons`
+- `react-spinners`
